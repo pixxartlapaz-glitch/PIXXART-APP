@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PIXXART</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      margin: 0;
+      padding: 15px;
+    }
+    h1 {
+      text-align: center;
+      color: #c0392b;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 5px 10px;
+      font-size: 18px;
+      margin: 0 3px;
+    }
+    #total {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>PIXXART 🍕</h1>
+
+<div class="section">
+  <h3>Pizzas</h3>
+  <div class="product">
+    <span>P-C Carnívora Pequeña</span>
+    <div>
+      <button onclick="add(30)">+</button>
+      <button onclick="add(-30)">-</button>
+    </div>
+  </div>
+
+  <div class="product">
+    <span>M-H Hawaiana Mediana</span>
+    <div>
+      <button onclick="add(43)">+</button>
+      <button onclick="add(-43)">-</button>
+    </div>
+  </div>
+
+  <div class="product">
+    <span>G-J Jamón y Queso Grande</span>
+    <div>
+      <button onclick="add(56)">+</button>
+      <button onclick="add(-56)">-</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Bebidas</h3>
+  <div class="product">
+    <span>Refresco 600 ml</span>
+    <div>
+      <button onclick="add(5)">+</button>
+      <button onclick="add(-5)">-</button>
+    </div>
+  </div>
+</div>
+
+<div id="total">
+  TOTAL: Bs <span id="monto">0</span>
+</div>
+
+<script>
+  let total = 0;
+  function add(valor) {
+    total += valor;
+    if (total < 0) total = 0;
+    document.getElementById("monto").innerText = total;
+  }
+</script>
+
+</body>
+</html>
