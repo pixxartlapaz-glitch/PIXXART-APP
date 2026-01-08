@@ -15,16 +15,16 @@ h1 {
   text-align: center;
   color: #c0392b;
 }
-.section {
-  margin-bottom: 20px;
+h2 {
+  margin-top: 20px;
 }
 .product {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: #ffffff;
   padding: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   border-radius: 8px;
 }
 button {
@@ -32,87 +32,125 @@ button {
   font-size: 18px;
 }
 .total {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>PIXXART 🍕</h1>
+<h1>PIXXART 🍕🥟</h1>
 
-<div class="section">
-<h3>PIZZAS</h3>
-
-<div class="product">
-<span>P-C Carnívora Pequeña</span>
-<div>
-<button onclick="add('P-C',30)">+</button>
-<button onclick="add('P-C',-30)">-</button>
-</div>
-</div>
+<h2>PIZZAS</h2>
 
 <div class="product">
-<span>M-H Hawaiana Mediana</span>
+<span>P Pequeña (C / H / J) – 19 Bs</span>
 <div>
-<button onclick="add('M-H',43)">+</button>
-<button onclick="add('M-H',-43)">-</button>
+<button onclick="add('Pizza Pequeña',19)">+</button>
+<button onclick="add('Pizza Pequeña',-19)">-</button>
 </div>
 </div>
 
 <div class="product">
-<span>G-J Jamón y Queso Grande</span>
+<span>M Mediana (C / H / J) – 37 Bs</span>
 <div>
-<button onclick="add('G-J',56)">+</button>
-<button onclick="add('G-J',-56)">-</button>
+<button onclick="add('Pizza Mediana',37)">+</button>
+<button onclick="add('Pizza Mediana',-37)">-</button>
 </div>
 </div>
-
-</div>
-
-<div class="section">
-<h3>EMPANADA</h3>
 
 <div class="product">
-<span>Empanada</span>
+<span>G Grande (C / H / J) – 70 Bs</span>
 <div>
-<button onclick="add('EMP',7)">+</button>
-<button onclick="add('EMP',-7)">-</button>
-</div>
+<button onclick="add('Pizza Grande',70)">+</button>
+<button onclick="add('Pizza Grande',-70)">-</button>
 </div>
 </div>
 
-<div class="section">
-<h3>BEBIDAS</h3>
+<h2>EMPANADA</h2>
 
 <div class="product">
-<span>Refresco 600 ml</span>
+<span>Empanada – 5 Bs</span>
 <div>
-<button onclick="add('REF600',5)">+</button>
-<button onclick="add('REF600',-5)">-</button>
+<button onclick="add('Empanada',5)">+</button>
+<button onclick="add('Empanada',-5)">-</button>
 </div>
+</div>
+
+<h2>BEBIDAS CALIENTES</h2>
+
+<div class="product">
+<span>Café – 4 Bs</span>
+<div>
+<button onclick="add('Café',4)">+</button>
+<button onclick="add('Café',-4)">-</button>
+</div>
+</div>
+
+<div class="product">
+<span>Mate – 4 Bs</span>
+<div>
+<button onclick="add('Mate',4)">+</button>
+<button onclick="add('Mate',-4)">-</button>
+</div>
+</div>
+
+<div class="product">
+<span>Chocolate – 5 Bs</span>
+<div>
+<button onclick="add('Chocolate',5)">+</button>
+<button onclick="add('Chocolate',-5)">-</button>
+</div>
+</div>
+
+<h2>REFRESCOS</h2>
+
+<div class="product">
+<span>Refresco 300 ml – 3.5 Bs</span>
+<div>
+<button onclick="add('Refresco 300 ml',3.5)">+</button>
+<button onclick="add('Refresco 300 ml',-3.5)">-</button>
+</div>
+</div>
+
+<div class="product">
+<span>Refresco 600 ml – 6 Bs</span>
+<div>
+<button onclick="add('Refresco 600 ml',6)">+</button>
+<button onclick="add('Refresco 600 ml',-6)">-</button>
+</div>
+</div>
+
+<div class="product">
+<span>Refresco 1.5 L – 9 Bs</span>
+<div>
+<button onclick="add('Refresco 1.5 L',9)">+</button>
+<button onclick="add('Refresco 1.5 L',-9)">-</button>
+</div>
+</div>
+
+<div class="product">
+<span>Refresco Personal – 2.5 Bs</span>
+<div>
+<button onclick="add('Refresco Personal',2.5)">+</button>
+<button onclick="add('Refresco Personal',-2.5)">-</button>
 </div>
 </div>
 
 <div class="total">
-TOTAL: Bs <span id="total">0</span>
+TOTAL: Bs <span id="total">0.00</span>
 </div>
 
 <script>
 let total = 0;
-let pedido = {};
 
 function add(prod, precio) {
   total += precio;
   if (total < 0) total = 0;
-
-  pedido[prod] = (pedido[prod] || 0) + (precio > 0 ? 1 : -1);
-  if (pedido[prod] <= 0) delete pedido[prod];
-
-  document.getElementById("total").innerText = total;
+  document.getElementById("total").innerText = total.toFixed(2);
 }
 </script>
 
