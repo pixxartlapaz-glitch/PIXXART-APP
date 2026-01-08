@@ -5,53 +5,14 @@
 <title>PIXXART</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #fff8f0;
-  margin: 0;
-  padding: 15px;
-}
-h1 {
-  text-align: center;
-  color: #c0392b;
-}
-h2 {
-  margin-top: 20px;
-}
-.product {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ffffff;
-  padding: 10px;
-  margin-bottom: 6px;
-  border-radius: 8px;
-}
-button {
-  padding: 6px 12px;
-  font-size: 18px;
-}
-.total {
-  font-size: 26px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 15px;
-}
-#detalle {
-  background: #fff;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 15px;
-}
-.ticket {
-  display: none;
-  font-family: monospace;
-}
-.print-btn {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-}
+body{font-family:Arial;background:#fff8f0;padding:15px}
+h1{text-align:center;color:#c0392b}
+h2{margin-top:20px}
+.product{display:flex;justify-content:space-between;background:#fff;padding:10px;margin-bottom:6px;border-radius:8px}
+button{padding:6px 12px;font-size:18px}
+.total{font-size:24px;font-weight:bold;text-align:center;margin-top:10px}
+input,select{width:100%;padding:8px;margin-top:5px}
+.ticket{font-family:monospace;font-size:14px}
 </style>
 </head>
 
@@ -59,118 +20,83 @@ button {
 
 <h1>PIXXART 🍕🥟</h1>
 
-<h2>PIZZAS PEQUEÑAS – 19 Bs</h2>
-<div class="product"><span>P-C Pequeña Carnívora</span><div>
-<button onclick="add('P-C',19)">+</button><button onclick="add('P-C',-19)">-</button>
-</div></div>
-<div class="product"><span>P-H Pequeña Hawaiana</span><div>
-<button onclick="add('P-H',19)">+</button><button onclick="add('P-H',-19)">-</button>
-</div></div>
-<div class="product"><span>P-J Pequeña Jamón y Queso</span><div>
-<button onclick="add('P-J',19)">+</button><button onclick="add('P-J',-19)">-</button>
-</div></div>
+<label>Tipo de venta:</label>
+<select id="tipoVenta">
+  <option value="Local">Local</option>
+  <option value="Delivery">Delivery</option>
+  <option value="QR">QR</option>
+</select>
 
-<h2>PIZZAS MEDIANAS – 37 Bs</h2>
-<div class="product"><span>M-C Mediana Carnívora</span><div>
-<button onclick="add('M-C',37)">+</button><button onclick="add('M-C',-37)">-</button>
-</div></div>
-<div class="product"><span>M-H Mediana Hawaiana</span><div>
-<button onclick="add('M-H',37)">+</button><button onclick="add('M-H',-37)">-</button>
-</div></div>
-<div class="product"><span>M-J Mediana Jamón y Queso</span><div>
-<button onclick="add('M-J',37)">+</button><button onclick="add('M-J',-37)">-</button>
-</div></div>
+<label>Descuento (Bs):</label>
+<input type="number" id="descuento" value="0">
 
-<h2>PIZZAS GRANDES – 70 Bs</h2>
-<div class="product"><span>G-C Grande Carnívora</span><div>
-<button onclick="add('G-C',70)">+</button><button onclick="add('G-C',-70)">-</button>
-</div></div>
-<div class="product"><span>G-H Grande Hawaiana</span><div>
-<button onclick="add('G-H',70)">+</button><button onclick="add('G-H',-70)">-</button>
-</div></div>
-<div class="product"><span>G-J Grande Jamón y Queso</span><div>
-<button onclick="add('G-J',70)">+</button><button onclick="add('G-J',-70)">-</button>
-</div></div>
+<h2>PIZZAS</h2>
+<div class="product"><span>P-C</span><div><button onclick="add('P-C',19)">+</button><button onclick="add('P-C',-19)">-</button></div></div>
+<div class="product"><span>P-H</span><div><button onclick="add('P-H',19)">+</button><button onclick="add('P-H',-19)">-</button></div></div>
+<div class="product"><span>P-J</span><div><button onclick="add('P-J',19)">+</button><button onclick="add('P-J',-19)">-</button></div></div>
+<div class="product"><span>M-C</span><div><button onclick="add('M-C',37)">+</button><button onclick="add('M-C',-37)">-</button></div></div>
+<div class="product"><span>M-H</span><div><button onclick="add('M-H',37)">+</button><button onclick="add('M-H',-37)">-</button></div></div>
+<div class="product"><span>M-J</span><div><button onclick="add('M-J',37)">+</button><button onclick="add('M-J',-37)">-</button></div></div>
+<div class="product"><span>G-C</span><div><button onclick="add('G-C',70)">+</button><button onclick="add('G-C',-70)">-</button></div></div>
+<div class="product"><span>G-H</span><div><button onclick="add('G-H',70)">+</button><button onclick="add('G-H',-70)">-</button></div></div>
+<div class="product"><span>G-J</span><div><button onclick="add('G-J',70)">+</button><button onclick="add('G-J',-70)">-</button></div></div>
 
-<h2>EMPANADA</h2>
-<div class="product"><span>Empanada – 5 Bs</span><div>
-<button onclick="add('EMP',5)">+</button><button onclick="add('EMP',-5)">-</button>
-</div></div>
+<div class="product"><span>Empanada</span><div><button onclick="add('Empanada',5)">+</button><button onclick="add('Empanada',-5)">-</button></div></div>
 
-<h2>BEBIDAS</h2>
-<div class="product"><span>Café – 4 Bs</span><div>
-<button onclick="add('Café',4)">+</button><button onclick="add('Café',-4)">-</button>
-</div></div>
-<div class="product"><span>Mate – 4 Bs</span><div>
-<button onclick="add('Mate',4)">+</button><button onclick="add('Mate',-4)">-</button>
-</div></div>
-<div class="product"><span>Chocolate – 5 Bs</span><div>
-<button onclick="add('Chocolate',5)">+</button><button onclick="add('Chocolate',-5)">-</button>
-</div></div>
-<div class="product"><span>Refresco 300 ml – 3.5 Bs</span><div>
-<button onclick="add('Refresco 300 ml',3.5)">+</button><button onclick="add('Refresco 300 ml',-3.5)">-</button>
-</div></div>
-<div class="product"><span>Refresco 600 ml – 6 Bs</span><div>
-<button onclick="add('Refresco 600 ml',6)">+</button><button onclick="add('Refresco 600 ml',-6)">-</button>
-</div></div>
-<div class="product"><span>Refresco 1.5 L – 9 Bs</span><div>
-<button onclick="add('Refresco 1.5 L',9)">+</button><button onclick="add('Refresco 1.5 L',-9)">-</button>
-</div></div>
-<div class="product"><span>Refresco Personal – 2.5 Bs</span><div>
-<button onclick="add('Refresco Personal',2.5)">+</button><button onclick="add('Refresco Personal',-2.5)">-</button>
-</div></div>
+<div class="total">
+Subtotal: Bs <span id="subtotal">0.00</span><br>
+TOTAL A PAGAR: Bs <span id="total">0.00</span>
+</div>
 
-<div class="total">TOTAL: Bs <span id="total">0.00</span></div>
-
-<div id="detalle"></div>
-
-<button class="print-btn" onclick="printCliente()">🧾 IMPRIMIR CLIENTE</button>
-<button class="print-btn" onclick="printCocina()">👨‍🍳 IMPRIMIR COCINA</button>
-
-<div id="ticketCliente" class="ticket"></div>
-<div id="ticketCocina" class="ticket"></div>
+<button onclick="guardarVenta()">💾 GUARDAR VENTA</button>
 
 <script>
-let total = 0;
+let subtotal = 0;
 let pedido = {};
+let ticket = Date.now();
 
-function add(prod, precio) {
-  total += precio;
-  if (total < 0) total = 0;
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbzMrAu-ABoFSrl_s5QTKPMWeg1edmgSkp1YbLgpWpB2ogR_pKIDl3I_B3MW-W6ryaIh3Q/exec";
 
-  pedido[prod] = (pedido[prod] || 0) + (precio > 0 ? 1 : -1);
-  if (pedido[prod] <= 0) delete pedido[prod];
+function add(prod, precio){
+  subtotal += precio;
+  if(subtotal < 0) subtotal = 0;
 
+  pedido[prod] = (pedido[prod]||0)+(precio>0?1:-1);
+  if(pedido[prod]<=0) delete pedido[prod];
+
+  calcularTotal();
+}
+
+function calcularTotal(){
+  let desc = Number(document.getElementById("descuento").value)||0;
+  let total = subtotal - desc;
+  if(total<0) total = 0;
+  document.getElementById("subtotal").innerText = subtotal.toFixed(2);
   document.getElementById("total").innerText = total.toFixed(2);
-  mostrarDetalle();
 }
 
-function mostrarDetalle() {
-  let html = "<b>DETALLE DEL PEDIDO:</b><br>";
-  for (let p in pedido) {
-    html += `${pedido[p]} x ${p}<br>`;
-  }
-  document.getElementById("detalle").innerHTML = html;
-}
+function guardarVenta(){
+  let data = {
+    fecha: new Date().toLocaleDateString(),
+    hora: new Date().toLocaleTimeString(),
+    ticket: ticket,
+    tipoVenta: document.getElementById("tipoVenta").value,
+    detalle: JSON.stringify(pedido),
+    subtotal: subtotal,
+    descuento: Number(document.getElementById("descuento").value)||0,
+    total: subtotal - (Number(document.getElementById("descuento").value)||0)
+  };
 
-function printCliente() {
-  let txt = "PIXXART\n\n";
-  for (let p in pedido) txt += `${pedido[p]} x ${p}\n`;
-  txt += `\nTOTAL: Bs ${total.toFixed(2)}\nGracias por su compra`;
-  imprimir(txt);
-}
-
-function printCocina() {
-  let txt = "PEDIDO COCINA\n\n";
-  for (let p in pedido) txt += `${pedido[p]} x ${p}\n`;
-  imprimir(txt);
-}
-
-function imprimir(texto) {
-  let w = window.open("", "", "width=300,height=400");
-  w.document.write(`<pre>${texto}</pre>`);
-  w.print();
-  w.close();
+  fetch(URL_SCRIPT,{
+    method:"POST",
+    body:JSON.stringify(data)
+  })
+  .then(r=>r.json())
+  .then(()=>{
+    alert("✅ Venta guardada correctamente");
+    location.reload();
+  })
+  .catch(()=>alert("❌ Error al guardar"));
 }
 </script>
 
