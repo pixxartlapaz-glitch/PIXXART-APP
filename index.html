@@ -6,14 +6,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{font-family:Arial;background:#fff8f0;padding:10px}
+body{
+  font-family: Arial;
+  background:#fff8f0;
+  padding:10px
+}
 h1{text-align:center;color:#c0392b}
 h2{margin-top:15px}
-select,input,button{width:100%;padding:8px;margin-top:5px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.product{background:#fff;padding:8px;border-radius:8px;text-align:center}
-.product button{width:45%;font-size:18px}
-.total{text-align:center;font-size:22px;font-weight:bold;margin-top:10px}
+
+select,input,button{
+  width:100%;
+  padding:8px;
+  margin-top:5px
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px
+}
+
+.product{
+  background:#fff;
+  padding:8px;
+  border-radius:8px;
+  text-align:center
+}
+
+.product button{
+  width:45%;
+  font-size:18px
+}
+
+.total{
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  margin-top:10px
+}
 </style>
 </head>
 
@@ -22,7 +52,7 @@ select,input,button{width:100%;padding:8px;margin-top:5px}
 <h1>PIXXART 🍕🥟</h1>
 
 <label>Tipo de venta</label>
-<select id="tipoVenta" onchange="renderMenu();calcularTotal();">
+<select id="tipoVenta" onchange="renderMenu();calcularTotal()">
   <option value="Local">Local</option>
   <option value="Delivery">Delivery</option>
   <option value="QR">QR</option>
@@ -37,19 +67,40 @@ select,input,button{width:100%;padding:8px;margin-top:5px}
 <h2>EMPANADA</h2>
 <div class="grid" id="empanada"></div>
 
-<h2>BEBIDAS</h2>
+<h2>BEBIDAS CALIENTES</h2>
 <div class="grid">
-  <div class="product"><b>Café</b><br>Bs 4<br><button onclick="add('Café',4)">+</button><button onclick="add('Café',-4)">-</button></div>
-  <div class="product"><b>Mate</b><br>Bs 4<br><button onclick="add('Mate',4)">+</button><button onclick="add('Mate',-4)">-</button></div>
-  <div class="product"><b>Chocolate</b><br>Bs 5<br><button onclick="add('Chocolate',5)">+</button><button onclick="add('Chocolate',-5)">-</button></div>
+  <div class="product"><b>Café</b><br>Bs 4<br>
+    <button onclick="add('Café',4)">+</button>
+    <button onclick="add('Café',-4)">-</button>
+  </div>
+  <div class="product"><b>Mate</b><br>Bs 4<br>
+    <button onclick="add('Mate',4)">+</button>
+    <button onclick="add('Mate',-4)">-</button>
+  </div>
+  <div class="product"><b>Chocolate</b><br>Bs 5<br>
+    <button onclick="add('Chocolate',5)">+</button>
+    <button onclick="add('Chocolate',-5)">-</button>
+  </div>
 </div>
 
 <h2>REFRESCOS</h2>
 <div class="grid">
-  <div class="product"><b>300 ml</b><br>Bs 3.5<br><button onclick="add('Ref 300',3.5)">+</button><button onclick="add('Ref 300',-3.5)">-</button></div>
-  <div class="product"><b>600 ml</b><br>Bs 6<br><button onclick="add('Ref 600',6)">+</button><button onclick="add('Ref 600',-6)">-</button></div>
-  <div class="product"><b>1.5 L</b><br>Bs 9<br><button onclick="add('Ref 1.5',9)">+</button><button onclick="add('Ref 1.5',-9)">-</button></div>
-  <div class="product"><b>Personal</b><br>Bs 2.5<br><button onclick="add('Ref Pers',2.5)">+</button><button onclick="add('Ref Pers',-2.5)">-</button></div>
+  <div class="product"><b>300 ml</b><br>Bs 3.5<br>
+    <button onclick="add('Refresco 300 ml',3.5)">+</button>
+    <button onclick="add('Refresco 300 ml',-3.5)">-</button>
+  </div>
+  <div class="product"><b>600 ml</b><br>Bs 6<br>
+    <button onclick="add('Refresco 600 ml',6)">+</button>
+    <button onclick="add('Refresco 600 ml',-6)">-</button>
+  </div>
+  <div class="product"><b>1.5 L</b><br>Bs 9<br>
+    <button onclick="add('Refresco 1.5 L',9)">+</button>
+    <button onclick="add('Refresco 1.5 L',-9)">-</button>
+  </div>
+  <div class="product"><b>Personal</b><br>Bs 2.5<br>
+    <button onclick="add('Refresco Personal',2.5)">+</button>
+    <button onclick="add('Refresco Personal',-2.5)">-</button>
+  </div>
 </div>
 
 <div class="total">
@@ -58,9 +109,11 @@ TOTAL A PAGAR: Bs <span id="total">0.00</span>
 </div>
 
 <button onclick="guardarVenta()">💾 GUARDAR VENTA</button>
+<button onclick="imprimirCliente()">🧾 IMPRIMIR CLIENTE</button>
+<button onclick="imprimirCocina()">👨‍🍳 IMPRIMIR COCINA</button>
 
 <script>
-const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbzMrAu-ABoFSrl_s5QTKPMWeg1edmgSkp1YbLgpWpB2ogR_pKIDl3I_B3MW-W6ryaIh3Q/exec";
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwG-J2nsCvJm4mt3EVwBRNaa8VTiOxHoYaVSyKB-3tH6K8YQa8LFisLokjp_KDeKGvn_A/exec";
 
 let subtotal = 0;
 let pedido = {};
@@ -74,45 +127,48 @@ function renderMenu(){
   emp.innerHTML = "";
 
   const pizzaData = [
-    ["P-C","Pequeña Carnívora",19,19],
-    ["P-H","Pequeña Hawaiana",19,19],
-    ["P-J","Pequeña Jamón",19,19],
-    ["M-C","Mediana Carnívora",37,49],
-    ["M-H","Mediana Hawaiana",37,49],
-    ["M-J","Mediana Jamón",37,49],
-    ["G-C","Grande Carnívora",70,90],
-    ["G-H","Grande Hawaiana",70,90],
-    ["G-J","Grande Jamón",70,90]
+    ["P-C",19,19],["P-H",19,19],["P-J",19,19],
+    ["M-C",37,49],["M-H",37,49],["M-J",37,49],
+    ["G-C",70,90],["G-H",70,90],["G-J",70,90]
   ];
 
   pizzaData.forEach(p=>{
     if(tipo==="Delivery" && p[0].startsWith("P")) return;
-    let precio = (tipo==="Delivery") ? p[3] : p[2];
-    pizzas.innerHTML += `<div class="product"><b>${p[0]}</b><br>Bs ${precio}<br>
-    <button onclick="add('${p[0]}',${precio})">+</button>
-    <button onclick="add('${p[0]}',-${precio})">-</button></div>`;
+    let precio = (tipo==="Delivery") ? p[2] : p[1];
+    pizzas.innerHTML += `
+      <div class="product">
+        <b>${p[0]}</b><br>Bs ${precio}<br>
+        <button onclick="add('${p[0]}',${precio})">+</button>
+        <button onclick="add('${p[0]}',-${precio})">-</button>
+      </div>`;
   });
 
   let empPrecio = (tipo==="Delivery") ? 7 : 5;
-  emp.innerHTML = `<div class="product"><b>Empanada</b><br>Bs ${empPrecio}<br>
-  <button onclick="add('Empanada',${empPrecio})">+</button>
-  <button onclick="add('Empanada',-${empPrecio})">-</button></div>`;
+  emp.innerHTML = `
+    <div class="product">
+      <b>Empanada</b><br>Bs ${empPrecio}<br>
+      <button onclick="add('Empanada',${empPrecio})">+</button>
+      <button onclick="add('Empanada',-${empPrecio})">-</button>
+    </div>`;
 }
 
 function add(prod,precio){
   subtotal += precio;
-  if(subtotal<0) subtotal=0;
-  pedido[prod]=(pedido[prod]||0)+(precio>0?1:-1);
-  if(pedido[prod]<=0) delete pedido[prod];
+  if(subtotal < 0) subtotal = 0;
+
+  pedido[prod] = (pedido[prod]||0)+(precio>0?1:-1);
+  if(pedido[prod] <= 0) delete pedido[prod];
+
   calcularTotal();
 }
 
 function calcularTotal(){
   let desc = Number(document.getElementById("descuento").value)||0;
   let total = subtotal - desc;
-  if(total<0) total=0;
-  document.getElementById("subtotal").innerText=subtotal.toFixed(2);
-  document.getElementById("total").innerText=total.toFixed(2);
+  if(total < 0) total = 0;
+
+  document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+  document.getElementById("total").innerText = total.toFixed(2);
 }
 
 function guardarVenta(){
@@ -131,8 +187,30 @@ function guardarVenta(){
     })
   }).then(()=>{
     alert("✅ Venta guardada");
-    location.reload();
   });
+}
+
+function imprimirCliente(){
+  let t = "PIXXART\nTICKET " + ticket + "\n\n";
+  for(let p in pedido){ t += pedido[p]+" x "+p+"\n"; }
+  let d = Number(document.getElementById("descuento").value)||0;
+  t += "\nSubtotal Bs "+subtotal.toFixed(2);
+  t += "\nDescuento Bs "+d.toFixed(2);
+  t += "\nTOTAL Bs "+(subtotal-d).toFixed(2);
+  imprimir(t,14);
+}
+
+function imprimirCocina(){
+  let t = "PEDIDO COCINA\nTICKET "+ticket+"\n\n";
+  for(let p in pedido){ t += pedido[p]+" x "+p+"\n"; }
+  imprimir(t,26);
+}
+
+function imprimir(txt,size){
+  let w = window.open("","","width=300,height=400");
+  w.document.write(`<pre style="font-size:${size}px;font-family:monospace">${txt}</pre>`);
+  w.print();
+  w.close();
 }
 
 renderMenu();
