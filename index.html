@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <title>PIXXART</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{font-family:Arial;background:#fff8f0;padding:15px}
+body{font-family:Arial;background:#fff8f0;padding:10px}
 h1{text-align:center;color:#c0392b}
-h2{margin-top:20px}
-.product{display:flex;justify-content:space-between;background:#fff;padding:10px;margin-bottom:6px;border-radius:8px}
-button{padding:6px 12px;font-size:18px}
-.total{font-size:24px;font-weight:bold;text-align:center;margin-top:10px}
-input,select{width:100%;padding:8px;margin-top:5px}
-.ticket{font-family:monospace;font-size:14px}
+h2{margin-top:15px}
+select,input,button{width:100%;padding:8px;margin-top:5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.product{background:#fff;padding:8px;border-radius:8px;text-align:center}
+.product button{width:45%;font-size:18px}
+.total{text-align:center;font-size:22px;font-weight:bold;margin-top:10px}
 </style>
 </head>
 
@@ -20,28 +21,36 @@ input,select{width:100%;padding:8px;margin-top:5px}
 
 <h1>PIXXART 🍕🥟</h1>
 
-<label>Tipo de venta:</label>
-<select id="tipoVenta">
+<label>Tipo de venta</label>
+<select id="tipoVenta" onchange="renderMenu();calcularTotal();">
   <option value="Local">Local</option>
   <option value="Delivery">Delivery</option>
   <option value="QR">QR</option>
 </select>
 
-<label>Descuento (Bs):</label>
-<input type="number" id="descuento" value="0">
+<label>Descuento (Bs)</label>
+<input type="number" id="descuento" value="0" oninput="calcularTotal()">
 
 <h2>PIZZAS</h2>
-<div class="product"><span>P-C</span><div><button onclick="add('P-C',19)">+</button><button onclick="add('P-C',-19)">-</button></div></div>
-<div class="product"><span>P-H</span><div><button onclick="add('P-H',19)">+</button><button onclick="add('P-H',-19)">-</button></div></div>
-<div class="product"><span>P-J</span><div><button onclick="add('P-J',19)">+</button><button onclick="add('P-J',-19)">-</button></div></div>
-<div class="product"><span>M-C</span><div><button onclick="add('M-C',37)">+</button><button onclick="add('M-C',-37)">-</button></div></div>
-<div class="product"><span>M-H</span><div><button onclick="add('M-H',37)">+</button><button onclick="add('M-H',-37)">-</button></div></div>
-<div class="product"><span>M-J</span><div><button onclick="add('M-J',37)">+</button><button onclick="add('M-J',-37)">-</button></div></div>
-<div class="product"><span>G-C</span><div><button onclick="add('G-C',70)">+</button><button onclick="add('G-C',-70)">-</button></div></div>
-<div class="product"><span>G-H</span><div><button onclick="add('G-H',70)">+</button><button onclick="add('G-H',-70)">-</button></div></div>
-<div class="product"><span>G-J</span><div><button onclick="add('G-J',70)">+</button><button onclick="add('G-J',-70)">-</button></div></div>
+<div class="grid" id="pizzas"></div>
 
-<div class="product"><span>Empanada</span><div><button onclick="add('Empanada',5)">+</button><button onclick="add('Empanada',-5)">-</button></div></div>
+<h2>EMPANADA</h2>
+<div class="grid" id="empanada"></div>
+
+<h2>BEBIDAS</h2>
+<div class="grid">
+  <div class="product"><b>Café</b><br>Bs 4<br><button onclick="add('Café',4)">+</button><button onclick="add('Café',-4)">-</button></div>
+  <div class="product"><b>Mate</b><br>Bs 4<br><button onclick="add('Mate',4)">+</button><button onclick="add('Mate',-4)">-</button></div>
+  <div class="product"><b>Chocolate</b><br>Bs 5<br><button onclick="add('Chocolate',5)">+</button><button onclick="add('Chocolate',-5)">-</button></div>
+</div>
+
+<h2>REFRESCOS</h2>
+<div class="grid">
+  <div class="product"><b>300 ml</b><br>Bs 3.5<br><button onclick="add('Ref 300',3.5)">+</button><button onclick="add('Ref 300',-3.5)">-</button></div>
+  <div class="product"><b>600 ml</b><br>Bs 6<br><button onclick="add('Ref 600',6)">+</button><button onclick="add('Ref 600',-6)">-</button></div>
+  <div class="product"><b>1.5 L</b><br>Bs 9<br><button onclick="add('Ref 1.5',9)">+</button><button onclick="add('Ref 1.5',-9)">-</button></div>
+  <div class="product"><b>Personal</b><br>Bs 2.5<br><button onclick="add('Ref Pers',2.5)">+</button><button onclick="add('Ref Pers',-2.5)">-</button></div>
+</div>
 
 <div class="total">
 Subtotal: Bs <span id="subtotal">0.00</span><br>
@@ -51,53 +60,82 @@ TOTAL A PAGAR: Bs <span id="total">0.00</span>
 <button onclick="guardarVenta()">💾 GUARDAR VENTA</button>
 
 <script>
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbzMrAu-ABoFSrl_s5QTKPMWeg1edmgSkp1YbLgpWpB2ogR_pKIDl3I_B3MW-W6ryaIh3Q/exec";
+
 let subtotal = 0;
 let pedido = {};
 let ticket = Date.now();
 
-const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbzMrAu-ABoFSrl_s5QTKPMWeg1edmgSkp1YbLgpWpB2ogR_pKIDl3I_B3MW-W6ryaIh3Q/exec";
+function renderMenu(){
+  let tipo = document.getElementById("tipoVenta").value;
+  let pizzas = document.getElementById("pizzas");
+  let emp = document.getElementById("empanada");
+  pizzas.innerHTML = "";
+  emp.innerHTML = "";
 
-function add(prod, precio){
+  const pizzaData = [
+    ["P-C","Pequeña Carnívora",19,19],
+    ["P-H","Pequeña Hawaiana",19,19],
+    ["P-J","Pequeña Jamón",19,19],
+    ["M-C","Mediana Carnívora",37,49],
+    ["M-H","Mediana Hawaiana",37,49],
+    ["M-J","Mediana Jamón",37,49],
+    ["G-C","Grande Carnívora",70,90],
+    ["G-H","Grande Hawaiana",70,90],
+    ["G-J","Grande Jamón",70,90]
+  ];
+
+  pizzaData.forEach(p=>{
+    if(tipo==="Delivery" && p[0].startsWith("P")) return;
+    let precio = (tipo==="Delivery") ? p[3] : p[2];
+    pizzas.innerHTML += `<div class="product"><b>${p[0]}</b><br>Bs ${precio}<br>
+    <button onclick="add('${p[0]}',${precio})">+</button>
+    <button onclick="add('${p[0]}',-${precio})">-</button></div>`;
+  });
+
+  let empPrecio = (tipo==="Delivery") ? 7 : 5;
+  emp.innerHTML = `<div class="product"><b>Empanada</b><br>Bs ${empPrecio}<br>
+  <button onclick="add('Empanada',${empPrecio})">+</button>
+  <button onclick="add('Empanada',-${empPrecio})">-</button></div>`;
+}
+
+function add(prod,precio){
   subtotal += precio;
-  if(subtotal < 0) subtotal = 0;
-
-  pedido[prod] = (pedido[prod]||0)+(precio>0?1:-1);
+  if(subtotal<0) subtotal=0;
+  pedido[prod]=(pedido[prod]||0)+(precio>0?1:-1);
   if(pedido[prod]<=0) delete pedido[prod];
-
   calcularTotal();
 }
 
 function calcularTotal(){
   let desc = Number(document.getElementById("descuento").value)||0;
   let total = subtotal - desc;
-  if(total<0) total = 0;
-  document.getElementById("subtotal").innerText = subtotal.toFixed(2);
-  document.getElementById("total").innerText = total.toFixed(2);
+  if(total<0) total=0;
+  document.getElementById("subtotal").innerText=subtotal.toFixed(2);
+  document.getElementById("total").innerText=total.toFixed(2);
 }
 
 function guardarVenta(){
-  let data = {
-    fecha: new Date().toLocaleDateString(),
-    hora: new Date().toLocaleTimeString(),
-    ticket: ticket,
-    tipoVenta: document.getElementById("tipoVenta").value,
-    detalle: JSON.stringify(pedido),
-    subtotal: subtotal,
-    descuento: Number(document.getElementById("descuento").value)||0,
-    total: subtotal - (Number(document.getElementById("descuento").value)||0)
-  };
-
   fetch(URL_SCRIPT,{
     method:"POST",
-    body:JSON.stringify(data)
-  })
-  .then(r=>r.json())
-  .then(()=>{
-    alert("✅ Venta guardada correctamente");
+    mode:"no-cors",
+    body:JSON.stringify({
+      fecha:new Date().toLocaleDateString(),
+      hora:new Date().toLocaleTimeString(),
+      ticket:ticket,
+      tipoVenta:document.getElementById("tipoVenta").value,
+      detalle:JSON.stringify(pedido),
+      subtotal:subtotal,
+      descuento:Number(document.getElementById("descuento").value)||0,
+      total:subtotal-(Number(document.getElementById("descuento").value)||0)
+    })
+  }).then(()=>{
+    alert("✅ Venta guardada");
     location.reload();
-  })
-  .catch(()=>alert("❌ Error al guardar"));
+  });
 }
+
+renderMenu();
 </script>
 
 </body>
