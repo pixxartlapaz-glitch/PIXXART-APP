@@ -111,8 +111,10 @@ TOTAL A PAGAR: Bs <span id="total">0.00</span>
 <button onclick="guardarVenta()">💾 GUARDAR VENTA</button>
 <button onclick="imprimirCliente()">🧾 IMPRIMIR CLIENTE</button>
 <button onclick="imprimirCocina()">👨‍🍳 IMPRIMIR COCINA</button>
+<button onclick="nuevoPedido()">🧹 NUEVO PEDIDO</button>
 
 <script>
+// 🔗 URL FINAL DE GOOGLE APPS SCRIPT
 const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwG-J2nsCvJm4mt3EVwBRNaa8VTiOxHoYaVSyKB-3tH6K8YQa8LFisLokjp_KDeKGvn_A/exec";
 
 let subtotal = 0;
@@ -187,7 +189,18 @@ function guardarVenta(){
     })
   }).then(()=>{
     alert("✅ Venta guardada");
+    nuevoPedido(); // limpia automáticamente
   });
+}
+
+function nuevoPedido(){
+  if(!confirm("¿Borrar el pedido actual y empezar uno nuevo?")) return;
+
+  subtotal = 0;
+  pedido = {};
+  ticket = Date.now();
+  document.getElementById("descuento").value = 0;
+  calcularTotal();
 }
 
 function imprimirCliente(){
@@ -203,7 +216,7 @@ function imprimirCliente(){
 function imprimirCocina(){
   let t = "PEDIDO COCINA\nTICKET "+ticket+"\n\n";
   for(let p in pedido){ t += pedido[p]+" x "+p+"\n"; }
-  imprimir(t,26);
+  imprimir(t,26); // letra grande
 }
 
 function imprimir(txt,size){
